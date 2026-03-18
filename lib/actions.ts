@@ -31,7 +31,7 @@ export async function signInAction(formData: FormData) {
   const { error } = await supabase.auth.signInWithPassword({ email, password });
 
   if (error) {
-    redirect(`/auth?error=${encodeURIComponent(getAuthErrorMessage(error))}`);
+    redirect(`/auth?mode=signin&error=${encodeURIComponent(getAuthErrorMessage(error))}`);
   }
 
   redirect("/account");
@@ -56,7 +56,7 @@ export async function signUpAction(formData: FormData) {
   });
 
   if (error) {
-    redirect(`/auth?error=${encodeURIComponent(getAuthErrorMessage(error))}`);
+    redirect(`/auth?mode=signup&error=${encodeURIComponent(getAuthErrorMessage(error))}`);
   }
 
   if (data.user) {
@@ -69,7 +69,7 @@ export async function signUpAction(formData: FormData) {
     });
 
     if (profileError) {
-      redirect(`/auth?error=${encodeURIComponent("Account created, but profile setup failed. Please sign in again.")}`);
+      redirect(`/auth?mode=signin&error=${encodeURIComponent("Account created, but profile setup failed. Please sign in again.")}`);
     }
   }
 
@@ -150,4 +150,10 @@ export async function saveProductAction(formData: FormData) {
   }
 
   redirect("/admin?success=Product%20added");
+}
+
+export async function signOutAction() {
+  const supabase = await createSupabaseServerClient();
+  await supabase.auth.signOut();
+  redirect("/auth?success=Signed%20out");
 }

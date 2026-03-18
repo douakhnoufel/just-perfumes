@@ -1,28 +1,53 @@
 import Link from "next/link";
-import Image from "next/image";
+import { signOutAction } from "@/lib/actions";
+import { Menu, Search, ShoppingBag, UserRound } from "lucide-react";
+import { createSupabaseServerClient } from "@/lib/supabase/server";
 
-export function SiteHeader() {
+export async function SiteHeader() {
+  const supabase = await createSupabaseServerClient();
+  const {
+    data: { user }
+  } = await supabase.auth.getUser();
+
   return (
     <header className="site-header">
-      <Link href="/" className="brand-block">
-        <Image
-          src="/logo-mark.svg"
-          alt="JUST-PERFUM"
-          width={40}
-          height={40}
-          className="brand-logo"
-        />
-        <div className="brand-text">
-          <span className="muted">Extrait de Parfum</span>
-          <strong>JUST-PERFUM</strong>
+      <div className="site-header-inner">
+        <div className="site-header-side">
+          <button type="button" className="icon-button mobile-menu" aria-label="Open navigation">
+            <Menu size={18} />
+          </button>
+          <nav className="nav-links" aria-label="Primary">
+            <Link href="/shop">Shop</Link>
+            <Link href="/shop">Collections</Link>
+            <Link href="/contact">About</Link>
+          </nav>
         </div>
-      </Link>
-      <nav className="nav-links">
-        <Link href="/shop">Collection</Link>
-        <Link href="/contact">Store</Link>
-        <Link href="/account">Rewards</Link>
-        <Link href="/auth">Account</Link>
-      </nav>
+
+        <Link href="/" className="brand-mark" aria-label="BADOU home">
+          BADOU
+        </Link>
+
+        <div className="site-header-actions">
+          <button type="button" className="icon-button" aria-label="Search">
+            <Search size={18} />
+          </button>
+          {user ? (
+            <form action={signOutAction}>
+              <button type="submit" className="icon-button" aria-label="Sign out">
+                <UserRound size={18} />
+              </button>
+            </form>
+          ) : (
+            <Link href="/auth" className="icon-button" aria-label="Account">
+              <UserRound size={18} />
+            </Link>
+          )}
+          <button type="button" className="icon-button cart-button" aria-label="Shopping bag">
+            <ShoppingBag size={18} />
+            <span className="cart-count">0</span>
+          </button>
+        </div>
+      </div>
     </header>
   );
 }

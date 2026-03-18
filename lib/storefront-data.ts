@@ -1,4 +1,5 @@
 import { cache } from "react";
+import { redirect } from "next/navigation";
 import { sampleProducts, samplePromotions } from "@/lib/mock-data";
 import { buildLoyaltyOverview, mergeProductPromotions } from "@/lib/rewards";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
@@ -60,44 +61,34 @@ export const getPromotions = cache(async () => {
 });
 
 export const getAccountOverview = cache(async () => {
-  try {
-    const supabase = await createSupabaseServerClient();
-    const {
-      data: { user }
-    } = await supabase.auth.getUser();
+  const supabase = await createSupabaseServerClient();
+  const {
+    data: { user }
+  } = await supabase.auth.getUser();
 
-    if (!user) {
-      throw new Error("Not signed in");
-    }
-
-    const [{ data: profile }, { data: orders }] = await Promise.all([
-      supabase.from("profiles").select("*").eq("id", user.id).single(),
-      supabase
-        .from("orders")
-        .select("items_count")
-        .eq("user_id", user.id)
-        .eq("status", "paid")
-    ]);
-
-    const totalPurchasedItems =
-      orders?.reduce((sum, order) => sum + order.items_count, 0) ?? 0;
-
-    return {
-      referralCode: profile?.referral_code ?? "JUSTBADOU",
-      referrals: profile?.successful_referrals ?? 0,
-      points: profile?.points ?? 0,
-      availableDiscount: Math.min(Math.floor((profile?.points ?? 0) / 100) * 5, 25),
-      loyalty: buildLoyaltyOverview(totalPurchasedItems)
-    };
-  } catch {
-    return {
-      referralCode: "JUSTBADOU",
-      referrals: 3,
-      points: 180,
-      availableDiscount: 5,
-      loyalty: buildLoyaltyOverview(4)
-    };
+  if (!user) {
+    redirect("/auth?error=Please%20sign%20in%20first.&mode=signin");
   }
+
+  const [{ data: profile }, { data: orders }] = await Promise.all([
+    supabase.from("profiles").select("*").eq("id", user.id).single(),
+    supabase
+      .from("orders")
+      .select("items_count")
+      .eq("user_id", user.id)
+      .eq("status", "paid")
+  ]);
+
+  const totalPurchasedItems =
+    orders?.reduce((sum, order) => sum + order.items_count, 0) ?? 0;
+
+  return {
+    referralCode: profile?.referral_code ?? "JUSTBADOU",
+    referrals: profile?.successful_referrals ?? 0,
+    points: profile?.points ?? 0,
+    availableDiscount: Math.min(Math.floor((profile?.points ?? 0) / 100) * 5, 25),
+    loyalty: buildLoyaltyOverview(totalPurchasedItems)
+  };
 });
 
 export const getAdminDashboard = cache(async () => {
