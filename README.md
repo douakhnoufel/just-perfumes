@@ -152,3 +152,4 @@ Screenshot checklist:
 - APK opens blank page:
   verify Capacitor `webDir` and run `npx cap sync android` again.
 # JUST-perfume
+# JUST-perfume
