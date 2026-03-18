@@ -4,10 +4,10 @@ export const sampleProducts: Product[] = [
   {
     id: "amber-noir",
     name: "Amber Noir",
+    type: "original",
     collection: "Night Veil",
     description: "Warm amber, vanilla resin, and smoked cedar.",
-    imageUrl:
-      "https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=1000&q=80",
+    imageUrl: "/images/jstprfpic1.jpg",
     price: 88,
     finalPrice: 88,
     stock: 18
@@ -15,10 +15,10 @@ export const sampleProducts: Product[] = [
   {
     id: "citrine-veil",
     name: "Citrine Veil",
+    type: "extrait",
     collection: "Sun Ritual",
     description: "Bergamot, neroli, and luminous white musk.",
-    imageUrl:
-      "https://images.unsplash.com/photo-1615634262417-8f9d0d18cbfd?auto=format&fit=crop&w=1000&q=80",
+    imageUrl: "/images/jstprf2.jpg",
     price: 74,
     finalPrice: 74,
     stock: 21
@@ -26,10 +26,10 @@ export const sampleProducts: Product[] = [
   {
     id: "rose-atlas",
     name: "Rose Atlas",
+    type: "eau-de-parfum",
     collection: "Velvet Bloom",
     description: "Rose absolute, pink pepper, and suede.",
-    imageUrl:
-      "https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=1000&q=80",
+    imageUrl: "/images/jstperfpic.jpg",
     price: 96,
     finalPrice: 96,
     stock: 12
@@ -37,6 +37,7 @@ export const sampleProducts: Product[] = [
   {
     id: "oud-river",
     name: "Oud River",
+    type: "original",
     collection: "Imperial Wood",
     description: "Oud accord, cardamom, and dark patchouli.",
     imageUrl:

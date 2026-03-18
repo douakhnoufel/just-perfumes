@@ -14,11 +14,11 @@ export default async function HomePage() {
   return (
     <div className="home-grid">
       <section className="hero-card">
-        <div className="eyebrow">Maison Badou presents</div>
-        <h1>parfume BADOU</h1>
+        <div className="eyebrow">Extrait de Parfum</div>
+        <h1>JUST-PERFUM</h1>
         <p>
-          Premium scents with animated luxury storefront UX, smart admin campaigns,
-          and a reward engine that turns every fifth purchase into your sixth bottle.
+          Discover authentic designer fragrances — Dior, Chanel, Tom Ford, and more.
+          100% original extrait de parfum with exclusive rewards for loyal clients.
         </p>
         <div className="hero-actions">
           <Link className="primary-link" href="/shop">
@@ -31,44 +31,58 @@ export default async function HomePage() {
         </div>
         <div className="hero-metrics">
           <article>
-            <Sparkles size={18} />
-            <span>Animated premium storefront</span>
+            <ShieldCheck size={18} />
+            <span>100% Original fragrances</span>
           </article>
           <article>
             <Gift size={18} />
-            <span>Referral bonuses + 6th free</span>
+            <span>6th bottle free</span>
           </article>
           <article>
-            <ShieldCheck size={18} />
-            <span>Supabase auth and admin control</span>
+            <Sparkles size={18} />
+            <span>Exclusive collections</span>
           </article>
         </div>
       </section>
 
       <PromoBanner promotions={promotions} />
       <FeaturedProducts products={products} />
+      <section className="store-gallery">
+        <article
+          className="store-photo"
+          style={{ backgroundImage: "url('/images/jstprfpic1.jpg')" }}
+        />
+        <article
+          className="store-photo"
+          style={{ backgroundImage: "url('/images/jstprf2.jpg')" }}
+        />
+        <article
+          className="store-photo"
+          style={{ backgroundImage: "url('/images/jstperfpic.jpg')" }}
+        />
+      </section>
 
       <section className="story-card">
         <div>
-          <div className="eyebrow">Owner spotlight</div>
-          <h2>Badou&apos;s signature fragrance house</h2>
+          <div className="eyebrow">Why choose us</div>
+          <h2>Authentic luxury fragrances</h2>
         </div>
         <p>
-          Designed for direct sales, seasonal reductions, and a mobile-ready experience
-          that can be packaged into an Android app with Capacitor.
+          We source only 100% original extrait de parfum from authorized distributors.
+          Experience the finest concentrations of Dior, Chanel, Tom Ford, and more.
         </p>
         <div className="story-points">
           <span>
             <Star size={16} />
-            Admin publishes flash reductions
+            Verified authentic products
           </span>
           <span>
             <Star size={16} />
-            Referral codes convert into bonus points
+            Earn rewards with every purchase
           </span>
           <span>
             <Star size={16} />
-            Loyalty tracker shows progress to free item
+            Free shipping on orders over 100
           </span>
         </div>
       </section>
