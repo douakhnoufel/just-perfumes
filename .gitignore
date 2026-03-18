@@ -6,6 +6,5 @@ dist
 .env
 .env.local
 *.log
-tsconfig.tsbuildinfo
 
 .vercel

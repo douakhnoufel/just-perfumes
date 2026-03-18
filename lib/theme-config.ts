@@ -7,13 +7,13 @@
 export const theme = {
   colors: {
     /** Primary dark backgrounds */
-    bg: "#111316",
-    surface: "rgba(19, 22, 28, 0.86)",
-    surfaceElevated: "rgba(30, 34, 41, 0.92)",
+    bg: "#0f0f0f",
+    surface: "rgba(26, 26, 26, 0.85)",
+    surfaceElevated: "rgba(42, 42, 42, 0.9)",
 
     /** Text */
-    ink: "#f3f2ee",
-    muted: "#b3b1aa",
+    ink: "#f5f5f5",
+    muted: "#a0a0a0",
 
     /** Gold accents */
     gold: "#d4af37",
@@ -21,7 +21,7 @@ export const theme = {
     goldDark: "#b8860b",
 
     /** Borders / lines */
-    line: "rgba(243, 242, 238, 0.12)",
+    line: "rgba(255, 255, 255, 0.1)",
     glassBorder: "rgba(255, 255, 255, 0.08)",
 
     /** Feedback */
@@ -36,7 +36,7 @@ export const theme = {
      * This value is provided here for documentation and for programmatic reads only.
      */
     animatedBg:
-      "linear-gradient(-45deg, #0f1115, #141921, #17130f, #10161e, #0f1115)",
+      "linear-gradient(-45deg, #0f0f0f, #1a0a2e, #0d1a2e, #0f1a0f, #2a0d0d, #0f0f0f)",
     luxury:
       "linear-gradient(135deg, #d4af37 0%, #ffd700 25%, #b8860b 50%, #d4af37 100%)",
     goldShimmer: "linear-gradient(135deg, #d4af37, #ffd700, #b8860b)",

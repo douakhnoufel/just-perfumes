@@ -1,10 +1,10 @@
 :root {
-  --bg: #111316;
-  --surface: rgba(19, 22, 28, 0.86);
-  --surface-elevated: rgba(30, 34, 41, 0.92);
-  --ink: #f3f2ee;
-  --muted: #b3b1aa;
-  --line: rgba(243, 242, 238, 0.12);
+  --bg: #0f0f0f;
+  --surface: rgba(26, 26, 26, 0.85);
+  --surface-elevated: rgba(42, 42, 42, 0.9);
+  --ink: #f5f5f5;
+  --muted: #a0a0a0;
+  --line: rgba(255, 255, 255, 0.1);
   --shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
   --luxury-gradient: linear-gradient(135deg, #d4af37 0%, #ffd700 25%, #b8860b 50%, #d4af37 100%);
   --gold-shimmer: linear-gradient(135deg, #d4af37, #ffd700, #b8860b);
@@ -33,7 +33,7 @@ body {
   min-height: 100vh;
   font-family: var(--font-body), sans-serif;
   color: var(--ink);
-  background: linear-gradient(-45deg, #0f1115, #141921, #17130f, #10161e, #0f1115);
+  background: linear-gradient(-45deg, #0f0f0f, #1a0a2e, #0d1a2e, #0f1a0f, #2a0d0d, #0f0f0f);
   background-size: 400% 400%;
   animation: gradientShift 18s ease infinite;
 }
@@ -218,7 +218,7 @@ main {
   width: 280px;
   height: 280px;
   border-radius: 999px;
-  background: radial-gradient(circle, rgba(212, 175, 55, 0.2) 0%, rgba(78, 94, 118, 0.16) 52%, transparent 72%);
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.2) 0%, rgba(100, 50, 150, 0.15) 50%, transparent 70%);
   opacity: 0.6;
   animation: drift 8s ease-in-out infinite, pulse 4s ease-in-out infinite alternate;
   filter: blur(40px);
@@ -231,7 +231,7 @@ main {
   left: -50%;
   width: 200%;
   height: 200%;
-  background: conic-gradient(from 0deg, transparent, rgba(212, 175, 55, 0.06), transparent, rgba(78, 94, 118, 0.06), transparent);
+  background: conic-gradient(from 0deg, transparent, rgba(212, 175, 55, 0.06), transparent, rgba(100, 50, 150, 0.06), transparent);
   animation: rotate 20s linear infinite;
   z-index: -1;
 }
