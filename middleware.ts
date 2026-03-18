@@ -1,5 +1,5 @@
 import { NextResponse, type NextRequest } from "next/server";
-import { createServerClient } from "@supabase/ssr";
+import { createServerClient, type CookieOptions } from "@supabase/ssr";
 
 const protectedRoutes = ["/account", "/admin"];
 
@@ -22,11 +22,11 @@ export async function middleware(request: NextRequest) {
           cookiesToSet: Array<{
             name: string;
             value: string;
-            options?: Record<string, unknown>;
+            options?: CookieOptions;
           }>
         ) {
           cookiesToSet.forEach(({ name, value, options }) =>
-            response.cookies.set(name, value, options as never)
+            response.cookies.set(name, value, options)
           );
         }
       }

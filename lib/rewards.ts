@@ -29,12 +29,12 @@ export function mergeProductPromotions(products: Product[], promotions: Promotio
 }
 
 export function buildLoyaltyOverview(totalPurchasedItems: number): LoyaltyOverview {
-  const completedPurchases = totalPurchasedItems % 5;
+  const itemsInCurrentCycle = totalPurchasedItems % 5;
   const freeItemsEarned = Math.floor(totalPurchasedItems / 5);
-  const remainingUntilFree = completedPurchases === 0 ? 0 : 5 - completedPurchases;
+  const remainingUntilFree = itemsInCurrentCycle === 0 ? 0 : 5 - itemsInCurrentCycle;
 
   return {
-    completedPurchases,
+    completedPurchases: itemsInCurrentCycle,
     remainingUntilFree,
     freeItemsEarned
   };
