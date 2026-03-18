@@ -3,6 +3,10 @@
 import { redirect } from "next/navigation";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 
+function normalizeInput(value: FormDataEntryValue | null | undefined) {
+  return String(value ?? "").trim();
+}
+
 function getAuthErrorMessage(error: { code?: string; message?: string } | null) {
   if (!error) {
     return "Something went wrong. Please try again.";
@@ -23,15 +27,64 @@ function getAuthErrorMessage(error: { code?: string; message?: string } | null) 
   return error.message ?? "Authentication failed. Please try again.";
 }
 
+async function ensureProfile(options: {
+  userId: string;
+  email: string;
+  fullName?: string;
+  referralCode?: string;
+}) {
+  const supabase = await createSupabaseServerClient();
+  const fullName =
+    options.fullName?.trim() || options.email.split("@")[0] || "JUST-PERFUME Client";
+
+  const { error } = await supabase.from("profiles").upsert(
+    {
+      id: options.userId,
+      email: options.email,
+      full_name: fullName,
+      referral_code: `BADOU-${options.userId.slice(0, 6).toUpperCase()}`,
+      referred_by_code: options.referralCode?.trim() || null
+    },
+    {
+      onConflict: "id"
+    }
+  );
+
+  return error;
+}
+
 export async function signInAction(formData: FormData) {
   const supabase = await createSupabaseServerClient();
-  const email = String(formData.get("email") ?? "");
-  const password = String(formData.get("password") ?? "");
+  const email = normalizeInput(formData.get("email")).toLowerCase();
+  const password = normalizeInput(formData.get("password"));
 
-  const { error } = await supabase.auth.signInWithPassword({ email, password });
+  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
 
   if (error) {
     redirect(`/auth?mode=signin&error=${encodeURIComponent(getAuthErrorMessage(error))}`);
+  }
+
+  if (data.user) {
+    const profileError = await ensureProfile({
+      userId: data.user.id,
+      email: data.user.email ?? email,
+      fullName:
+        typeof data.user.user_metadata?.full_name === "string"
+          ? data.user.user_metadata.full_name
+          : undefined,
+      referralCode:
+        typeof data.user.user_metadata?.referral_code_used === "string"
+          ? data.user.user_metadata.referral_code_used
+          : undefined
+    });
+
+    if (profileError) {
+      redirect(
+        `/auth?mode=signin&error=${encodeURIComponent(
+          "Signed in, but your profile could not be prepared. Please try again."
+        )}`
+      );
+    }
   }
 
   redirect("/account");
@@ -39,10 +92,10 @@ export async function signInAction(formData: FormData) {
 
 export async function signUpAction(formData: FormData) {
   const supabase = await createSupabaseServerClient();
-  const email = String(formData.get("email"));
-  const password = String(formData.get("password"));
-  const fullName = String(formData.get("fullName"));
-  const referralCode = String(formData.get("referralCode") || "");
+  const email = normalizeInput(formData.get("email")).toLowerCase();
+  const password = normalizeInput(formData.get("password"));
+  const fullName = normalizeInput(formData.get("fullName"));
+  const referralCode = normalizeInput(formData.get("referralCode"));
 
   const { data, error } = await supabase.auth.signUp({
     email,
@@ -59,21 +112,30 @@ export async function signUpAction(formData: FormData) {
     redirect(`/auth?mode=signup&error=${encodeURIComponent(getAuthErrorMessage(error))}`);
   }
 
-  if (data.user) {
-    const { error: profileError } = await supabase.from("profiles").upsert({
-      id: data.user.id,
+  if (data.user && data.session) {
+    const profileError = await ensureProfile({
+      userId: data.user.id,
       email,
-      full_name: fullName,
-      referral_code: `BADOU-${data.user.id.slice(0, 6).toUpperCase()}`,
-      referred_by_code: referralCode || null
+      fullName,
+      referralCode
     });
 
     if (profileError) {
-      redirect(`/auth?mode=signin&error=${encodeURIComponent("Account created, but profile setup failed. Please sign in again.")}`);
+      redirect(
+        `/auth?mode=signin&error=${encodeURIComponent(
+          "Account created, but profile setup failed. Please sign in again."
+        )}`
+      );
     }
+
+    redirect("/account");
   }
 
-  redirect("/account");
+  redirect(
+    `/auth?mode=signin&success=${encodeURIComponent(
+      "Account created. Check your email to confirm your address, then sign in."
+    )}`
+  );
 }
 
 export async function savePromotionAction(formData: FormData) {
