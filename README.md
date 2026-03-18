@@ -151,3 +151,4 @@ Screenshot checklist:
   run `supabase/schema.sql` and ensure tables exist.
 - APK opens blank page:
   verify Capacitor `webDir` and run `npx cap sync android` again.
+# JUST-perfume
