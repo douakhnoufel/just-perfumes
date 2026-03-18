@@ -33,9 +33,45 @@ body {
   min-height: 100vh;
   font-family: var(--font-body), sans-serif;
   color: var(--ink);
+  position: relative;
+  isolation: isolate;
   background: linear-gradient(-45deg, #0f0f0f, #1a0a2e, #0d1a2e, #0f1a0f, #2a0d0d, #0f0f0f);
   background-size: 400% 400%;
   animation: gradientShift 18s ease infinite;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -2;
+  opacity: 0.14;
+  background-image:
+    linear-gradient(180deg, rgba(8, 10, 14, 0.76), rgba(8, 10, 14, 0.88)),
+    url("/images/jstprfpic1.jpg"),
+    url("/images/jstprf2.jpg"),
+    url("/images/jstperfpic.jpg");
+  background-repeat: no-repeat;
+  background-size: cover, 36vw 52vh, 34vw 48vh, 30vw 44vh;
+  background-position: center, 2% 14%, 99% 18%, 84% 84%;
+  filter: saturate(0.85) contrast(1.05);
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  background:
+    radial-gradient(circle at 22% 12%, rgba(212, 175, 55, 0.1), transparent 40%),
+    radial-gradient(circle at 86% 84%, rgba(212, 175, 55, 0.08), transparent 34%);
+}
+
+.page-shell {
+  position: relative;
+  z-index: 1;
 }
 
 a {
@@ -217,6 +253,11 @@ main {
   gap: 22px;
   position: relative;
   overflow: hidden;
+  background-image:
+    linear-gradient(120deg, rgba(9, 11, 15, 0.9), rgba(9, 11, 15, 0.72)),
+    url("/images/jstprfpic1.jpg");
+  background-size: cover;
+  background-position: center;
 }
 
 /* Add floating particles for luxury effect */
@@ -846,6 +887,11 @@ tr:nth-child(5) { animation-delay: 0.4s; }
   .site-footer,
   main {
     width: calc(100% - 20px);
+  }
+
+  body::before {
+    background-size: cover, 72vw 24vh, 68vw 22vh, 64vw 20vh;
+    background-position: center, 6% 11%, 95% 16%, 92% 88%;
   }
 
   /* Reduce animations on mobile for better performance */
