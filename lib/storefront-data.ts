@@ -29,7 +29,8 @@ export const getAllProducts = cache(async () => {
       finalPrice: Number(product.price),
       stock: product.stock
     }));
-  } catch {
+  } catch (error) {
+    console.error("Failed to fetch products from database:", error);
     return sampleProducts;
   }
 });
@@ -55,7 +56,8 @@ export const getPromotions = cache(async () => {
       bonusReferralPoints: promotion.bonus_referral_points,
       appliesToProductIds: promotion.applies_to_product_ids ?? []
     }));
-  } catch {
+  } catch (error) {
+    console.error("Failed to fetch promotions from database:", error);
     return samplePromotions;
   }
 });
