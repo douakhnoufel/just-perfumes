@@ -25,7 +25,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${display.variable} ${body.variable}`} suppressHydrationWarning>
+      <body className={`${display.variable} ${body.variable} dark-theme`} suppressHydrationWarning>
         <div className="page-shell">
           <SiteHeader />
           <main>{children}</main>
