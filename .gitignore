@@ -1,0 +1,10 @@
+.next
+node_modules
+.vercel
+android
+dist
+.env
+.env.local
+*.log
+
+.vercel
