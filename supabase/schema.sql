@@ -15,6 +15,7 @@ create table if not exists public.profiles (
 create table if not exists public.products (
   id text primary key,
   name text not null,
+  type text not null default 'original',
   collection text not null,
   description text not null,
   image_url text not null,
@@ -76,6 +77,36 @@ with check (auth.uid() = id);
 create policy "products_public_read"
 on public.products for select
 using (true);
+
+create policy "products_admin_insert"
+on public.products for insert
+with check (
+  exists (
+    select 1 from public.profiles
+    where public.profiles.id = auth.uid()
+      and public.profiles.is_admin = true
+  )
+);
+
+create policy "products_admin_update"
+on public.products for update
+using (
+  exists (
+    select 1 from public.profiles
+    where public.profiles.id = auth.uid()
+      and public.profiles.is_admin = true
+  )
+);
+
+create policy "products_admin_delete"
+on public.products for delete
+using (
+  exists (
+    select 1 from public.profiles
+    where public.profiles.id = auth.uid()
+      and public.profiles.is_admin = true
+  )
+);
 
 create policy "promotions_public_read"
 on public.promotions for select
@@ -162,10 +193,10 @@ create trigger trg_orders_rewards
 after update on public.orders
 for each row execute procedure public.handle_paid_order_rewards();
 
-insert into public.products (id, name, collection, description, image_url, price, stock)
+insert into public.products (id, name, type, collection, description, image_url, price, stock)
 values
-  ('amber-noir', 'Amber Noir', 'Night Veil', 'Warm amber, vanilla resin, and smoked cedar.', 'https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=1000&q=80', 88, 18),
-  ('citrine-veil', 'Citrine Veil', 'Sun Ritual', 'Bergamot, neroli, and luminous white musk.', 'https://images.unsplash.com/photo-1615634262417-8f9d0d18cbfd?auto=format&fit=crop&w=1000&q=80', 74, 21),
-  ('rose-atlas', 'Rose Atlas', 'Velvet Bloom', 'Rose absolute, pink pepper, and suede.', 'https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=1000&q=80', 96, 12),
-  ('oud-river', 'Oud River', 'Imperial Wood', 'Oud accord, cardamom, and dark patchouli.', 'https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&w=1000&q=80', 120, 8)
+  ('amber-noir', 'Amber Noir', 'original', 'Night Veil', 'Warm amber, vanilla resin, and smoked cedar.', 'https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=1000&q=80', 88, 18),
+  ('citrine-veil', 'Citrine Veil', 'extrait', 'Sun Ritual', 'Bergamot, neroli, and luminous white musk.', 'https://images.unsplash.com/photo-1615634262417-8f9d0d18cbfd?auto=format&fit=crop&w=1000&q=80', 74, 21),
+  ('rose-atlas', 'Rose Atlas', 'eau-de-parfum', 'Velvet Bloom', 'Rose absolute, pink pepper, and suede.', 'https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=1000&q=80', 96, 12),
+  ('oud-river', 'Oud River', 'original', 'Imperial Wood', 'Oud accord, cardamom, and dark patchouli.', 'https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&w=1000&q=80', 120, 8)
 on conflict (id) do nothing;

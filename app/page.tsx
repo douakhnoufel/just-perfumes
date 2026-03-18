@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, Gift, ShieldCheck, Sparkles, Star } from "lucide-react";
+import { ArrowRight, Gift, MapPin, ShieldCheck, Sparkles, Star } from "lucide-react";
 import { FeaturedProducts } from "@/components/featured-products";
 import { PromoBanner } from "@/components/promo-banner";
 import { LoyaltyPanel } from "@/components/loyalty-panel";
@@ -14,19 +14,19 @@ export default async function HomePage() {
   return (
     <div className="home-grid">
       <section className="hero-card">
-        <div className="eyebrow">Extrait de Parfum</div>
+        <div className="eyebrow">Badou&apos;s fragrance boutique</div>
         <h1>JUST-PERFUM</h1>
         <p>
-          Discover authentic designer fragrances — Dior, Chanel, Tom Ford, and more.
-          100% original extrait de parfum with exclusive rewards for loyal clients.
+          Discover an immersive extrait de parfum destination built around authentic
+          designer fragrances, boutique atmosphere, and a premium reward journey.
         </p>
         <div className="hero-actions">
           <Link className="primary-link" href="/shop">
             Explore collection
             <ArrowRight size={18} />
           </Link>
-          <Link className="secondary-link" href="/auth">
-            Sign in
+          <Link className="secondary-link" href="/contact">
+            Visit the boutique
           </Link>
         </div>
         <div className="hero-metrics">
@@ -43,33 +43,64 @@ export default async function HomePage() {
             <span>Exclusive collections</span>
           </article>
         </div>
+        <div className="hero-note">
+          <span className="pill">Dior, Creed, YSL, Jean Paul Gaultier</span>
+          <span className="muted">Curated in-store and online for a luxury-first experience.</span>
+        </div>
       </section>
 
       <PromoBanner promotions={promotions} />
       <FeaturedProducts products={products} />
-      <section className="store-gallery">
-        <article
-          className="store-photo"
-          style={{ backgroundImage: "url('/images/jstprfpic1.jpg')" }}
-        />
-        <article
-          className="store-photo"
-          style={{ backgroundImage: "url('/images/jstprf2.jpg')" }}
-        />
-        <article
-          className="store-photo"
-          style={{ backgroundImage: "url('/images/jstperfpic.jpg')" }}
-        />
+
+      <section className="gallery-section">
+        <div className="section-heading">
+          <div className="eyebrow">Store atmosphere</div>
+          <h1>Step inside the JUST-PERFUM experience</h1>
+          <p>
+            The space itself is part of the brand: moody shelving, lit fragrance walls,
+            and a boutique presentation that feels premium before the bottle is opened.
+          </p>
+        </div>
+        <div className="store-gallery">
+          <article
+            className="store-photo store-photo-wide"
+            style={{ backgroundImage: "url('/images/jstprfpic1.jpg')" }}
+          >
+            <div className="store-photo-copy">
+              <div className="eyebrow">Front room</div>
+              <h3>Signature entrance mirror and premium wall display</h3>
+            </div>
+          </article>
+          <article
+            className="store-photo"
+            style={{ backgroundImage: "url('/images/jstprf2.jpg')" }}
+          >
+            <div className="store-photo-copy">
+              <div className="eyebrow">Designer shelf</div>
+              <h3>Lit collections from iconic fragrance houses</h3>
+            </div>
+          </article>
+          <article
+            className="store-photo"
+            style={{ backgroundImage: "url('/images/jstperfpic.jpg')" }}
+          >
+            <div className="store-photo-copy">
+              <div className="eyebrow">Highlight wall</div>
+              <h3>Editorial presentation built around hero scents</h3>
+            </div>
+          </article>
+        </div>
       </section>
 
       <section className="story-card">
         <div>
-          <div className="eyebrow">Why choose us</div>
-          <h2>Authentic luxury fragrances</h2>
+          <div className="eyebrow">Why clients return</div>
+          <h2>Authentic luxury, strong rewards, boutique-level trust</h2>
         </div>
         <p>
-          We source only 100% original extrait de parfum from authorized distributors.
-          Experience the finest concentrations of Dior, Chanel, Tom Ford, and more.
+          We source only 100% original extrait de parfum from authorized distributors,
+          then wrap that into a commerce flow with promotions, referral value, and
+          loyalty incentives that feel built for repeat buyers.
         </p>
         <div className="story-points">
           <span>
@@ -82,8 +113,17 @@ export default async function HomePage() {
           </span>
           <span>
             <Star size={16} />
-            Free shipping on orders over 100
+            Admin-controlled flash reductions
           </span>
+        </div>
+        <div className="story-cta">
+          <Link className="primary-link" href="/contact">
+            <MapPin size={16} />
+            Find the store
+          </Link>
+          <Link className="secondary-link" href="/auth">
+            Create your account
+          </Link>
         </div>
       </section>
 

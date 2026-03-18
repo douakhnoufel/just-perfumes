@@ -1,4 +1,5 @@
 import { AdminPromoManager } from "@/components/admin-promo-manager";
+import { AdminProductManager } from "@/components/admin-product-manager";
 import { AdminProductTable } from "@/components/admin-product-table";
 import { getAdminDashboard } from "@/lib/storefront-data";
 
@@ -37,6 +38,7 @@ export default async function AdminPage({
           errorMessage={errorMessage}
           successMessage={successMessage}
         />
+        <AdminProductManager />
         <AdminProductTable products={dashboard.products} />
       </div>
     </section>

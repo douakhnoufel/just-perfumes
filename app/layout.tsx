@@ -16,8 +16,13 @@ const body = Manrope({
 });
 
 export const metadata: Metadata = {
-  title: "parfume BADOU",
-  description: "Luxury perfume store by Badou with rewards, referrals, and admin promotions."
+  title: "JUST-PERFUM | Extrait de Parfum Original",
+  description: "Authentic designer fragrances — Dior, Chanel, Tom Ford. 100% original extrait de parfum with exclusive rewards.",
+  icons: {
+    icon: "/icon.svg",
+    shortcut: "/icon.svg",
+    apple: "/icon.svg"
+  }
 };
 
 export default function RootLayout({

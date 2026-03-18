@@ -110,3 +110,44 @@ export async function savePromotionAction(formData: FormData) {
 
   redirect("/admin?success=Promotion%20saved");
 }
+
+export async function saveProductAction(formData: FormData) {
+  const supabase = await createSupabaseServerClient();
+  const {
+    data: { user }
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    redirect(`/auth?error=${encodeURIComponent("Please sign in first.")}`);
+  }
+
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("is_admin")
+    .eq("id", user.id)
+    .single();
+
+  if (!profile?.is_admin) {
+    redirect(`/admin?error=${encodeURIComponent("Admin access required.")}`);
+  }
+
+  const name = String(formData.get("name"));
+  const id = name.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "");
+
+  const { error } = await supabase.from("products").insert({
+    id,
+    name,
+    type: String(formData.get("type")),
+    collection: String(formData.get("collection")),
+    description: String(formData.get("description")),
+    image_url: String(formData.get("imageUrl")),
+    price: Number(formData.get("price")),
+    stock: Number(formData.get("stock"))
+  });
+
+  if (error) {
+    redirect(`/admin?error=${encodeURIComponent(error.message || "Could not save product.")}`);
+  }
+
+  redirect("/admin?success=Product%20added");
+}

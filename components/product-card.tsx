@@ -1,14 +1,19 @@
 import { ShoppingBag } from "lucide-react";
 import type { Product } from "@/lib/types";
+import { PERFUME_TYPE_LABELS } from "@/lib/types";
 import { formatCurrency } from "@/lib/format";
 
 export function ProductCard({ product }: { product: Product }) {
+  const typeLabel = PERFUME_TYPE_LABELS[product.type] ?? "Perfume";
+
   return (
     <article className="product-card">
       <div
         className="product-image"
         style={{ backgroundImage: `url(${product.imageUrl})` }}
-      />
+      >
+        <span className="type-badge">{typeLabel}</span>
+      </div>
       <div className="product-copy">
         <div>
           <div className="eyebrow">{product.collection}</div>

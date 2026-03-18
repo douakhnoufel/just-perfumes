@@ -20,6 +20,7 @@ export const getAllProducts = cache(async () => {
     return data.map((product) => ({
       id: product.id,
       name: product.name,
+      type: product.type ?? "original",
       collection: product.collection,
       description: product.description,
       imageUrl: product.image_url,

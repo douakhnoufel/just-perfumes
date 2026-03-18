@@ -1,13 +1,23 @@
+import { MapPin } from "lucide-react";
+
 export function SiteFooter() {
   return (
     <footer className="site-footer">
       <div>
-        <strong>parfume BADOU</strong>
-        <p className="muted">Supabase-powered perfume commerce built for Vercel and Android packaging.</p>
+        <strong>JUST-PERFUM</strong>
+        <p className="muted">Extrait de Parfum — 100% Original designer fragrances by Badou.</p>
       </div>
       <div className="muted">
-        <div>Referral points unlock extra reductions.</div>
-        <div>Every sixth purchased item is free for loyal clients.</div>
+        <a
+          href="https://maps.app.goo.gl/4op56WDqWCRzqWdY6"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="footer-location"
+        >
+          <MapPin size={14} />
+          <span>Visit our store</span>
+        </a>
+        <div>Your 6th bottle is on us — loyalty rewarded.</div>
       </div>
     </footer>
   );
